@@ -5,8 +5,7 @@
   <h1>MusicPlayer</h1>
 </div>
 
-# MusicPlayer
-**MusicPlayer** is a very simple Music Player that play Music on Windows, it plays the most common music files (mp3, m4a, ogg, wav), just drag&drop your files/folders or open them on the main screen and start listing.
+**"MusicPlayer"** is a very simple Music Player that play Music on Windows, it plays the most common music files (mp3, m4a, ogg, wav), just drag&drop your files/folders or open them on the main screen and start listing.
 
 ## Simple functions
 
