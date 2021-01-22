@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="#">
+  <a href="">
 	<img alt="Logo" width="200" heigth="200" src="./MusicPlayer/Resources/Logo.png" />
   </a>
   <h1>MusicPlayer</h1>
@@ -7,7 +7,7 @@
 
 **"MusicPlayer"** is a very simple Music Player that play Music on Windows, it plays the most common music files (mp3, m4a, ogg, wav), just drag&drop your files/folders or open them on the main screen and start listing.
 
-## Simple functions
+# Simple functions
 
 + Plays **mp3**, **m4a**, **ogg** and **wav** music files
 + Drag&Drop your files or directories into the player
