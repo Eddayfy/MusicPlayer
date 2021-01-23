@@ -19,9 +19,9 @@
 
 **"MusicPlayer"** is a very simple Music Player that play Music on Windows, it plays the most common music files (mp3, m4a, ogg, wav), just drag&drop your files/folders or open them on the main screen and start listing.
 
-If you understand the ['Moroccan Darija'](https://en.wikipedia.org/wiki/Moroccan_Arabic), you can read this "README" file on 'Darija' [From Here](#)
+If you understand the ['Moroccan Darija'](https://en.wikipedia.org/wiki/Moroccan_Arabic), you can read this "README" file on 'Darija' [From Here](README_DARIJA.md)
 <p align="right">
-إلا كنتي باغي تقرا هادشي بالدارجة <a href="#">ورك هنا</a>
+إلا كنتي باغي تقرا هادشي بالدارجة <a href="README_DARIJA.md">ورك هنا</a>
 </p>
 
 ## Features
