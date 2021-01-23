@@ -1,4 +1,4 @@
-<div style="direction: rtl;">
+<div direction="rtl">
 
 <div align="center">
   <a href="https://github.com/Eddayfy/MusicPlayer">
