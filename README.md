@@ -48,7 +48,7 @@ From time to time I'll build and publish a new pre-release which can be find her
  - [Windows OS](https://en.wikipedia.org/wiki/Microsoft_Windows)
 
 ## Build Notes
-1. Make sure you have the necessary Requirements [Requirements](#Requirements).
+1. Make sure you have the necessary [Requirements](#Requirements).
 2. Clone this repo:  `git clone https://github.com/Eddayfy/MusicPlayer.git`
 3. cd to MusicPlayer: `cd MusicPlayer`
 4. Search for 'MSBuild.exe' based on your VS version [See this](https://en.wikipedia.org/wiki/MSBuild#Versions)
@@ -57,7 +57,7 @@ From time to time I'll build and publish a new pre-release which can be find her
 4. Enjoy! (Or you can Build it on Microsoft Visual Studio)
 
 ## Bugs and Issues
-If you have a bug or an issue with this project, Help me and [Open a new issue](#) here on GitHub.
+If you have a bug or an issue with this project, Help me and [Open a new issue](https://github.com/Eddayfy/MusicPlayer/issues) here on GitHub.
 
 ## Icons
 All Icons are taken from [Flaticon](https://www.flaticon.com/).
