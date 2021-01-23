@@ -1,3 +1,5 @@
+<div style="direction: rtl;">
+
 <div align="center">
   <a href="https://github.com/Eddayfy/MusicPlayer">
 	<img alt="Logo" width="200" heigth="200" src="./MusicPlayer/Resources/Logo.png" />
@@ -73,5 +75,7 @@ From time to time I'll build and publish a new pre-release which can be find her
 ![screenshot 04](./Screenshots/Screenshot04.png)
 
 ![screenshot 05](./Screenshots/Screenshot05.png)
+
+</div>
 
 </div>
