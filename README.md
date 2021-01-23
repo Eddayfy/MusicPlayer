@@ -8,10 +8,10 @@
   <h4>
     <a href="#Features">Features</a> |
     <a href="#Releases">Releases</a> |
-    <a href="#Libraries used">Libraries used</a> |
+    <a href="#Libraries-used">Libraries used</a> |
     <a href="#Requirements">Requirements</a> |
-    <a href="#Build Notes">Build Notes</a> |
-    <a href="#Bugs and Issues">Bugs and Issues</a> |
+    <a href="#Build-Notes">Build Notes</a> |
+    <a href="#Bugs-and-Issues">Bugs and Issues</a> |
     <a href="#Icons">Icons</a> |
     <a href="#Screenshots">Screenshots</a>
   </h4>
