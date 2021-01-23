@@ -1,11 +1,6 @@
-﻿using SpotifyAPI.Web;
-using System;
+﻿using System.Windows.Forms;
 using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System;
 
 namespace MusicPlayer
 {
@@ -151,36 +146,6 @@ namespace MusicPlayer
         {
             if (RadioButtonLTR.Checked)
                 RichTextBoxLyrics.RightToLeft = RightToLeft.No;
-        }
-
-        async Task AutoInitialize()
-        {
-            var spotify = new SpotifyClient("BQAEPqQZWD0hrH4DPS33Ixi6BTmdc9Q5jEYMLi1B-RNqT4ZcLj37SsHafiAwWZP_oE_r103C8jW5fs0HR0AHL5wtEt8eXazG6qVpvXHUwchUNA4K874OxVyt18a_xypyBjJNUOaOn_1-QRxZlITB5gD6H7KM8j97df1pb_G6flJXQI9a-fOIg6npXutYdaLPkiF8RtZCzL1WE3nIm0Nfv07pFOqXpMaF1bfELQxemerVT0bw0BSCYNwsr4ejdwTBzeQjgtndfXUGfYPgg5AZA_hNTID0LihllsQ");
-
-            var track = await spotify.Tracks.Get("4eQfhof6xQ2H6XSkMTlLFS");
-
-            TextBoxTitle.Text = track.Name;
-
-            foreach (var artist in track.Artists)
-                TextBoxAlbumArtist.Text += artist.Name + ", ";
-
-            TextBoxAlbum.Text = track.Album.Name;
-
-            using (WebClient wc = new WebClient())
-            {
-                using (Stream s = wc.OpenRead(track.Album.Images[0].Url))
-                {
-                    using (Bitmap bmp = new Bitmap(s))
-                    {
-                        PictureBoxCover.Image = new Bitmap(bmp, PictureBoxCover.Width, PictureBoxCover.Height);
-                    }
-                }
-            }
-        }
-
-        private async void ButtonAuto_Click(object sender, EventArgs e)
-        {
-            await AutoInitialize();
         }
     }
 }

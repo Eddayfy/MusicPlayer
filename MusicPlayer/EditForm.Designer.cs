@@ -488,7 +488,6 @@
             this.ButtonAuto.Text = "Auto";
             this.ButtonAuto.UseVisualStyleBackColor = false;
             this.ButtonAuto.Visible = false;
-            this.ButtonAuto.Click += new System.EventHandler(this.ButtonAuto_Click);
             // 
             // EditForm
             // 
