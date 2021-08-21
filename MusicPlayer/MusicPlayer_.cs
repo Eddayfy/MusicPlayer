@@ -15,6 +15,7 @@ namespace MusicPlayer
         private AudioFileReader AudioFileReader;
         private bool IsFileGenerateException;
         private int CurrentPlayingMusicIndex;
+        private List<string> AudioExtensions;
         private ShuffleState ShuffleState;
         private WaveOutEvent WaveOutEvent;
         public static List<string> Music;
@@ -38,6 +39,11 @@ namespace MusicPlayer
             IsFileGenerateException = false;
             LastSortedMethode = SortedMethode.Title;
 
+            AudioExtensions = new List<string>()
+            {
+                ".mp3", ".m4a", ".ogg", ".wav", ".3gp", ".flac", ".m4b", ".m4p", ".mpeg", ".mp4"
+            };
+
             PlaybackBarControl.ChangedProgressPanel.MouseMove += ChangedProgressPanel_MouseMove;
         }
 
@@ -46,11 +52,11 @@ namespace MusicPlayer
             OpenFileDialog OFD = new OpenFileDialog
             {
                 Multiselect = true,
-                Filter = "Audio Files|*.mp3; *.m4a; *.ogg; *.wav | All files |*.*"
+                Filter = "Audio Files|*.mp3; *.m4a; *.ogg; *.wav; *.3gp; *.flac; *.m4b; *.m4p; *.mpeg; | All files |*.*"
             };
 
             if (OFD.ShowDialog() == DialogResult.OK)
-                AddItemsinListToTheMainLists(OFD.FileNames.ToList());
+                AddItemsInListToTheMainList(OFD.FileNames.ToList());
         }
 
         private void OpenFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -59,11 +65,14 @@ namespace MusicPlayer
 
             if (FBD.ShowDialog() == DialogResult.OK)
             {
-                //  Filter the Folder and Add only the Audio file to the List
-                var Files = Directory.EnumerateFiles(FBD.SelectedPath, "*.*", SearchOption.AllDirectories)
-                    .Where(s => s.ToLower().EndsWith(".mp3") || s.ToLower().EndsWith(".m4a") || s.ToLower().EndsWith(".ogg") || s.ToLower().EndsWith(".wav"));
+                var AllFilesPath = Directory.EnumerateFiles(FBD.SelectedPath, "*.*", SearchOption.AllDirectories);
 
-                AddItemsinListToTheMainLists(Files.ToList());
+                List<string> OnlyAudioFiles = new List<string>();
+                foreach (var FilePath in AllFilesPath)
+                    if (FileIsAudio(FilePath))
+                        OnlyAudioFiles.Add(FilePath);
+
+                AddItemsInListToTheMainList(OnlyAudioFiles);
             }
         }
 
@@ -122,22 +131,33 @@ namespace MusicPlayer
             }
         }
 
-        private async void AddItemsinListToTheMainLists(List<string> List)
+        private async void AddItemsInListToTheMainList(List<string> List)
         {
             //  Initialize the list and Play the first music
-            foreach (var item in List)
+            foreach (string item in List)
             {
-                if (item.ToLower().EndsWith(".mp3") || item.ToLower().EndsWith(".m4a") || item.ToLower().EndsWith(".ogg") || item.ToLower().EndsWith(".wav"))
+                if (FileIsAudio(item))
                 {
                     Music.Add(item);
                     AddMusicToFlowLayoutPanel(item);
-
-                    if (CurrentPlayingMusicIndex == 0 && WaveOutEvent == null)
-                        MusicInitialize(Music[CurrentPlayingMusicIndex]);
                 }
                 await Task.Delay(10);
-
             }
+        }
+
+        private bool FileIsAudio(string AudioFilePath)
+        {
+            bool Value = false;
+
+            foreach (string AudioExtension in AudioExtensions)
+            {
+                if (AudioFilePath.ToLower().EndsWith(AudioExtension))
+                {
+                    Value = true;
+                    break;
+                }
+            }
+            return Value;
         }
 
         private void MusicInitialize(string path)
@@ -172,11 +192,10 @@ namespace MusicPlayer
                 //  Change the Label Text to the Music Total Time
                 //  Change the PictureBox BackgroundImage to the Music Cover
                 LabelMusicEndTime.Text = AudioFileReader.TotalTime.ToString(@"mm\:ss");
-                PictureBoxMusicCover.BackgroundImage = TagFile.Cover(path);
+                PictureBoxMusicCover.BackgroundImage = TagFile.GetCover(path);
 
                 //  Change the Form Title to the Music Title + Artist
-                //  Change the RichTextBox Text to the Music Lyrics
-                this.Text = TagFile.Artist(path) + " - " + TagFile.Title(path);
+                this.Text = TagFile.GetArtists(path) + " - " + TagFile.GetTitle(path);
 
                 //  Change the Current MusicPanel BackgroundColor, and reset the others
                 foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
@@ -192,31 +211,31 @@ namespace MusicPlayer
             }
             catch
             {
-                //  If Audio File GenerateException, Convert it to 'wav' and save it
-                //  on a Temp File, so we can play it later
-                AudioFileReader = null;
-
-                using (var reader = new MediaFoundationReader(Music[CurrentPlayingMusicIndex]))
-                {
-                    if (!Directory.Exists("TempFiles/"))
-                        Directory.CreateDirectory("TempFiles/");
-
-                    //  Save the 'wav' audio on the Temp File
-                    WaveFileWriter.CreateWaveFile("TempFiles/temp.wav", reader);
-                }
-
-                //  Change the "IsFileGenerateException" value to true, because the File is Generate Exception
-                IsFileGenerateException = true;
-
-                //  Try to play the Temp File, if isn't played alert a message to the user
                 try
                 {
+                    //  If Audio File GenerateException, Convert it to 'wav' and save it
+                    //  on a Temp File, so we can play it later
+                    AudioFileReader = null;
+
+                    using (var reader = new MediaFoundationReader(Music[CurrentPlayingMusicIndex]))
+                    {
+                        if (!Directory.Exists("TempFiles/"))
+                            Directory.CreateDirectory("TempFiles/");
+
+                        //  Save the 'wav' audio on the Temp File
+                        WaveFileWriter.CreateWaveFile("TempFiles/temp.wav", reader);
+                    }
+
+                    //  Change the "IsFileGenerateException" value to true, because the File is Generate Exception
+                    IsFileGenerateException = true;
+
+                    //  Try to play the Temp File, if isn't played alert a message to the user
                     MusicInitialize("TempFiles/temp.wav");
                 }
-                catch
+                catch (Exception Ex)
                 {
-                    MessageBox.Show("We are sorry, this song is hard for us to play it for you, Please play another one.",
-                        "Sorry!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("This song is hard for us to play it for you, Please play another one." + Environment.NewLine + "(" + Ex.Message + ")",
+                            "We are sorry!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -228,11 +247,16 @@ namespace MusicPlayer
             {
                 if (MusicState == MusicState.Pause)
                 {
-                    WaveOutEvent.Play();
+                    if (CurrentPlayingMusicIndex == 0 && WaveOutEvent == null)
+                        MusicInitialize(Music[CurrentPlayingMusicIndex]);
+                    else
+                    {
+                        WaveOutEvent.Play();
 
-                    MusicState = MusicState.Play;
-                    ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
-                    PlayAndPauseToolStripMenuItem.Text = "Pause";
+                        MusicState = MusicState.Play;
+                        ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
+                        PlayAndPauseToolStripMenuItem.Text = "Pause";
+                    }
                 }
                 else if (MusicState == MusicState.Play)
                 {
@@ -249,7 +273,7 @@ namespace MusicPlayer
 
         private void ButtonPrevieus_Click(object sender, EventArgs e)
         {
-            //  Check if the Current Playing Music isn't the last one on list, and the list isn't clear
+            //  Check if the Current Playing Music isn't the first one on list, and the list isn't clear
             if (CurrentPlayingMusicIndex != 0 && Music.Count != 0)
             {
                 MusicInitialize(Music[--CurrentPlayingMusicIndex]);
@@ -288,7 +312,7 @@ namespace MusicPlayer
                     ShuffleToolStripMenuItem.Checked = false;
                     ButtonShuffle.BackgroundImage = Properties.Resources.shuffleOff;
 
-                    //  Orer the list on the last SortedMethode
+                    //  Order the list on the last SortedMethode
                     if (LastSortedMethode == SortedMethode.Title)
                         SortByTitleToolContextMenuStriItem.PerformClick();
                     else if (LastSortedMethode == SortedMethode.Album)
@@ -317,7 +341,7 @@ namespace MusicPlayer
                     ClearListToolStripMenuItem.PerformClick();
 
                     //  Initialize the list and Play the first music
-                    AddItemsinListToTheMainLists(ShuffledList);
+                    AddItemsInListToTheMainList(ShuffledList);
                 }
             }
         }
@@ -459,7 +483,7 @@ namespace MusicPlayer
             //  Initialize the CurrentPlayingMusicIndex with the correct index
             for (int i = 0; i < Music.Count; i++)
             {
-                if (this.Text == (TagFile.Artist(Music[i]) + " - " + TagFile.Title(Music[i])))
+                if (this.Text == (TagFile.GetArtists(Music[i]) + " - " + TagFile.GetTitle(Music[i])))
                 {
                     CurrentPlayingMusicIndex = i;
                     break;
@@ -534,13 +558,13 @@ namespace MusicPlayer
         private void SortByTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  I use the OrderBy function and the Linq, to sort the list on the title
-            List<string> SortedList = Music.OrderBy(o => TagFile.Title(o)).ToList();
+            List<string> SortedList = Music.OrderBy(o => TagFile.GetTitle(o)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsinListToTheMainLists(SortedList);
+            AddItemsInListToTheMainList(SortedList);
 
             LastSortedMethode = SortedMethode.Title;
 
@@ -555,7 +579,7 @@ namespace MusicPlayer
 
         private void SortByArtistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var SortedList = Music.OrderBy(x => TagFile.Artist(x)).ThenBy(x => TagFile.Album(x)).ThenBy(x => TagFile.Track(x)).ToList();
+            var SortedList = Music.OrderBy(x => TagFile.GetArtists(x)).ThenBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
             // The only reason make me keep All this Code bellow on comment, is that i found a better and small way to do it (The Line upove)
             #region The Comment Code
             /*  //  I use the OrderBy function and the Linq, to sort the list on the Album
@@ -595,7 +619,7 @@ namespace MusicPlayer
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsinListToTheMainLists(SortedList);
+            AddItemsInListToTheMainList(SortedList);
 
             LastSortedMethode = SortedMethode.Artist;
 
@@ -611,13 +635,13 @@ namespace MusicPlayer
         private void SortByAlbumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  Sort thelist by the Album then the Track Number
-            var SortedList = Music.OrderBy(x => TagFile.Album(x)).ThenBy(x => TagFile.Track(x)).ToList();
+            var SortedList = Music.OrderBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsinListToTheMainLists(SortedList);
+            AddItemsInListToTheMainList(SortedList);
 
             LastSortedMethode = SortedMethode.Album;
 
@@ -667,9 +691,9 @@ namespace MusicPlayer
             e.Effect = DragDropEffects.All;
 
             //  Allow only the Audio Files and the folders
-            foreach (string Path in (string[])e.Data.GetData(DataFormats.FileDrop))
+            foreach (string FilePath in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
-                if (!Path.ToLower().EndsWith(".mp3") && !Path.ToLower().EndsWith(".m4a") && !Path.ToLower().EndsWith(".ogg") && !Path.ToLower().EndsWith(".wav") && !Directory.Exists(Path))
+                if (!FileIsAudio(FilePath))
                 {
                     e.Effect = DragDropEffects.None;
                     break;
@@ -679,25 +703,25 @@ namespace MusicPlayer
 
         private void MusicPlayer_DragDrop(object sender, DragEventArgs e)
         {
-            List<string> TheList = new List<string>();
+            List<string> OnlyAudioFiles = new List<string>();
 
-            foreach (string path in (string[])e.Data.GetData(DataFormats.FileDrop))
+            foreach (string FilePath in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
                 //  Add only the Audio file to the List
-                if (path.ToLower().EndsWith(".mp3") || path.ToLower().EndsWith(".m4a") || path.ToLower().EndsWith(".ogg") || path.ToLower().EndsWith(".wav"))
-                    TheList.Add(path);
-                else if (Directory.Exists(path))
+                if (FileIsAudio(FilePath))
+                    OnlyAudioFiles.Add(FilePath);
+                else if (Directory.Exists(FilePath))
                 {
                     //  Filter the Folder and Add only the Audio file to the List
-                    var Files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                        .Where(s => s.ToLower().EndsWith(".mp3") || s.ToLower().EndsWith(".m4a") || s.ToLower().EndsWith(".ogg") || s.ToLower().EndsWith(".wav"));
+                    var AllFilesPath = Directory.EnumerateFiles(FilePath, "*.*", SearchOption.AllDirectories);
 
-                    foreach (string File in Files)
-                        TheList.Add(File);
+                    foreach (var FilePathInList in AllFilesPath)
+                        if (FileIsAudio(FilePathInList))
+                            OnlyAudioFiles.Add(FilePathInList);
                 }
             }
 
-            AddItemsinListToTheMainLists(TheList);
+            AddItemsInListToTheMainList(OnlyAudioFiles);
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)

@@ -28,65 +28,81 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.LabelTitle = new System.Windows.Forms.Label();
+            this.LabelDescription = new System.Windows.Forms.Label();
+            this.PictureBoxLogo = new System.Windows.Forms.PictureBox();
+            this.LinkLabelAppGodName = new System.Windows.Forms.LinkLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // LabelTitle
             // 
-            this.label1.Font = new System.Drawing.Font("Arial Black", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 115);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(280, 44);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Music Player";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelTitle.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelTitle.Location = new System.Drawing.Point(12, 115);
+            this.LabelTitle.Name = "LabelTitle";
+            this.LabelTitle.Size = new System.Drawing.Size(280, 55);
+            this.LabelTitle.TabIndex = 1;
+            this.LabelTitle.Text = "Music Player";
+            this.LabelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // LabelDescription
             // 
-            this.label3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 168);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(280, 18);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "El Mehdi Eddayfy";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelDescription.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelDescription.Location = new System.Drawing.Point(13, 170);
+            this.LabelDescription.Name = "LabelDescription";
+            this.LabelDescription.Size = new System.Drawing.Size(280, 18);
+            this.LabelDescription.TabIndex = 1;
+            this.LabelDescription.Text = "This application was \"Created\" with love by";
+            this.LabelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox1
+            // PictureBoxLogo
             // 
-            this.pictureBox1.Image = global::MusicPlayer.Properties.Resources.Logo;
-            this.pictureBox1.Location = new System.Drawing.Point(102, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.PictureBoxLogo.Image = global::MusicPlayer.Properties.Resources.Logo;
+            this.PictureBoxLogo.Location = new System.Drawing.Point(102, 12);
+            this.PictureBoxLogo.Name = "PictureBoxLogo";
+            this.PictureBoxLogo.Size = new System.Drawing.Size(100, 100);
+            this.PictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PictureBoxLogo.TabIndex = 0;
+            this.PictureBoxLogo.TabStop = false;
+            // 
+            // LinkLabelAppGodName
+            // 
+            this.LinkLabelAppGodName.AutoSize = true;
+            this.LinkLabelAppGodName.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LinkLabelAppGodName.Location = new System.Drawing.Point(91, 197);
+            this.LinkLabelAppGodName.Name = "LinkLabelAppGodName";
+            this.LinkLabelAppGodName.Size = new System.Drawing.Size(123, 19);
+            this.LinkLabelAppGodName.TabIndex = 2;
+            this.LinkLabelAppGodName.TabStop = true;
+            this.LinkLabelAppGodName.Text = "El Mehdi Eddayfy";
+            this.LinkLabelAppGodName.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelAppGodName_LinkClicked);
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 211);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(304, 228);
+            this.Controls.Add(this.LinkLabelAppGodName);
+            this.Controls.Add(this.LabelDescription);
+            this.Controls.Add(this.LabelTitle);
+            this.Controls.Add(this.PictureBoxLogo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About MusicPlayer";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox PictureBoxLogo;
+        private System.Windows.Forms.Label LabelTitle;
+        private System.Windows.Forms.Label LabelDescription;
+        private System.Windows.Forms.LinkLabel LinkLabelAppGodName;
     }
 }

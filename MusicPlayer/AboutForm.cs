@@ -16,5 +16,10 @@ namespace MusicPlayer
         {
             InitializeComponent();
         }
+
+        private void LinkLabelAppGodName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"https://github.com/eddayfy");
+        }
     }
 }

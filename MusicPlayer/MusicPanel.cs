@@ -23,8 +23,8 @@ namespace MusicPlayer
             PanelInisialize();
 
             this.MusicPath = path;
-            MusicTitle.Text = TagFile.Title(path);
-            MusicCover.Image = TagFile.Cover(path).GetThumbnailImage(40, 40, null, IntPtr.Zero);
+            MusicTitle.Text = TagFile.GetTitle(path);
+            MusicCover.Image = TagFile.GetCover(path).GetThumbnailImage(40, 40, null, IntPtr.Zero);
         }
 
         void PanelInisialize()
