@@ -13,7 +13,7 @@ namespace MusicPlayer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MusicPlayer_());
+            Application.Run(new MainForm());
         }
     }
 }

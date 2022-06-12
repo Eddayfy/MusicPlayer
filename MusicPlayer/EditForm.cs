@@ -31,11 +31,16 @@ namespace MusicPlayer
             EditFormInitialise(CurrentPlayingMusicIndex);
         }
 
+        private void EditForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void EditFormInitialise(int Index)
         {
             TextBoxGenre.AutoCompleteCustomSource.AddRange(TagLib.Genres.Audio);
 
-            string TrackPath = MusicPlayer_.Music[Index];
+            string TrackPath = MainForm.Music[Index];
             TextBoxTitle.Text = TagFile.GetTitle(TrackPath);
             TextBoxArtists.Text = TagFile.GetArtists(TrackPath);
             TextBoxAlbum.Text = TagFile.GetAlbum(TrackPath);
@@ -73,13 +78,13 @@ namespace MusicPlayer
             {
                 if (TextBoxTitle.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetTitle(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxTitle.Text);
+                    TagFile.SetTitle(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTitle.Text);
                     TextBoxTitle.Tag = "";
                 }
 
                 if (TextBoxArtists.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetArtists(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxArtists.Text);
+                    TagFile.SetArtists(MainForm.Music[CurrentPlayingMusicIndex], TextBoxArtists.Text);
                     TextBoxArtists.Tag = "";
                 }
 
@@ -87,7 +92,7 @@ namespace MusicPlayer
                 {
                     if (TextBoxAlbum.Tag.ToString() == "Ok")
                     {
-                        TagFile.SetAlbum(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxAlbum.Text);
+                        TagFile.SetAlbum(MainForm.Music[CurrentPlayingMusicIndex], TextBoxAlbum.Text);
                         TextBoxAlbum.Tag = "";
                     }
                 }
@@ -103,25 +108,25 @@ namespace MusicPlayer
 
                 if (TextBoxTrack.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetTrackN(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxTrack.Text);
+                    TagFile.SetTrackN(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTrack.Text);
                     TextBoxTrack.Tag = "";
                 }
 
                 if (TextBoxTrackCount.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetTrackCount(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxTrackCount.Text);
+                    TagFile.SetTrackCount(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTrackCount.Text);
                     TextBoxTrackCount.Tag = "";
                 }
 
                 if (TextBoxYear.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetYear(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxYear.Text);
+                    TagFile.SetYear(MainForm.Music[CurrentPlayingMusicIndex], TextBoxYear.Text);
                     TextBoxYear.Tag = "";
                 }
 
                 if (TextBoxGenre.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetGenre(MusicPlayer_.Music[CurrentPlayingMusicIndex], TextBoxGenre.Text);
+                    TagFile.SetGenre(MainForm.Music[CurrentPlayingMusicIndex], TextBoxGenre.Text);
                     TextBoxGenre.Tag = "";
                 }
 
@@ -129,7 +134,7 @@ namespace MusicPlayer
                 {
                     if (PictureBoxCover.Tag.ToString() == "Ok")
                     {
-                        TagFile.SetCover(MusicPlayer_.Music[CurrentPlayingMusicIndex], PictureBoxCover.Image);
+                        TagFile.SetCover(MainForm.Music[CurrentPlayingMusicIndex], PictureBoxCover.Image);
                         PictureBoxCover.Tag = "";
                     }
                 }
@@ -143,7 +148,7 @@ namespace MusicPlayer
                     MessageBox.Show(Exc.GetType().ToString(), "====:PictureBoxCover:====");
                 }
 
-                TagFile.SetLyrics(MusicPlayer_.Music[CurrentPlayingMusicIndex], RichTextBoxLyrics.Text);
+                TagFile.SetLyrics(MainForm.Music[CurrentPlayingMusicIndex], RichTextBoxLyrics.Text);
 
                 MessageBox.Show("All Tags Saved");
 
@@ -168,7 +173,7 @@ namespace MusicPlayer
 
         private void ButtonNext_Click(object sender, EventArgs e)
         {
-            if (CurrentPlayingMusicIndex != MusicPlayer_.Music.Count - 1)
+            if (CurrentPlayingMusicIndex != MainForm.Music.Count - 1)
                 EditFormInitialise(++CurrentPlayingMusicIndex);
         }
 
@@ -416,6 +421,5 @@ namespace MusicPlayer
             SearchPanel.Visible = false;
             this.Size = EditFormSize;
         }
-
     }
 }

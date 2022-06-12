@@ -492,6 +492,7 @@
             this.Name = "EditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Form";
+            this.Load += new System.EventHandler(this.EditForm_Load);
             this.EditPanel.ResumeLayout(false);
             this.EditPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxCover)).EndInit();

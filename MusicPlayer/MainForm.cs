@@ -9,7 +9,7 @@ using System;
 
 namespace MusicPlayer
 {
-    public partial class MusicPlayer_ : Form
+    public partial class MainForm : Form
     {
         private SortedMethode LastSortedMethode;
         private AudioFileReader AudioFileReader;
@@ -23,7 +23,7 @@ namespace MusicPlayer
         private LoopState LoopState;
         private Random RandomValue;
 
-        public MusicPlayer_()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -49,10 +49,13 @@ namespace MusicPlayer
 
         private void OpenFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string audioFilter = "Audio Files|" + (from ext in AudioExtensions select ("*" + ext + "; ")) + "| All files |*.*";
+
             OpenFileDialog OFD = new OpenFileDialog
             {
                 Multiselect = true,
-                Filter = "Audio Files|*.mp3; *.m4a; *.ogg; *.wav; *.3gp; *.flac; *.m4b; *.m4p; *.mpeg; | All files |*.*"
+                //Filter = "Audio Files|*.mp3; *.m4a; *.ogg; *.wav; *.3gp; *.flac; *.m4b; *.m4p; *.mpeg; | All files |*.*"
+                Filter = audioFilter
             };
 
             if (OFD.ShowDialog() == DialogResult.OK)
@@ -726,12 +729,7 @@ namespace MusicPlayer
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutForm AboutForm = new AboutForm()
-            {
-                Icon = this.Icon
-            };
-
-            AboutForm.ShowDialog(this);
+            new AboutForm() { Icon = this.Icon }.ShowDialog(this);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

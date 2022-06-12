@@ -1,6 +1,6 @@
 ﻿namespace MusicPlayer
 {
-    partial class MusicPlayer_
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MusicPlayer_));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LabelMusicCurrentTimeState = new System.Windows.Forms.Label();
             this.LabelMusicEndTime = new System.Windows.Forms.Label();
             this.PanelControls = new System.Windows.Forms.Panel();
