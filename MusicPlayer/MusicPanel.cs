@@ -6,9 +6,9 @@ namespace MusicPlayer
 {
     class MusicPanel : Panel
     {
-        private readonly PictureBox MusicCover = new PictureBox();
+        public readonly PictureBox MusicCover = new PictureBox();
         public string MusicPath = "";
-        private readonly Label MusicTitle = new Label();
+        public readonly Label MusicTitle = new Label();
 
         public MusicPanel()
         {

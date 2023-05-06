@@ -34,7 +34,12 @@
             this.LabelMusicEndTime = new System.Windows.Forms.Label();
             this.PanelControls = new System.Windows.Forms.Panel();
             this.TrackBarVolumeState = new System.Windows.Forms.TrackBar();
+            this.ButtonPrevieus = new System.Windows.Forms.Button();
+            this.ButtonShuffle = new System.Windows.Forms.Button();
+            this.ButtonLoop = new System.Windows.Forms.Button();
+            this.ButtonNext = new System.Windows.Forms.Button();
             this.ButtonShowAndHideList = new System.Windows.Forms.Button();
+            this.ButtonPlayPause = new System.Windows.Forms.Button();
             this.AppMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +72,7 @@
             this.StartSongToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ShowMusicLyricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SortByToolContextMenuStriItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SortByTitleToolContextMenuStriItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,12 +82,6 @@
             this.ClearListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PictureBoxMusicCover = new System.Windows.Forms.Panel();
             this.FlowLayoutPanelMusic = new System.Windows.Forms.FlowLayoutPanel();
-            this.ButtonPrevieus = new System.Windows.Forms.Button();
-            this.ButtonShuffle = new System.Windows.Forms.Button();
-            this.ButtonLoop = new System.Windows.Forms.Button();
-            this.ButtonNext = new System.Windows.Forms.Button();
-            this.ButtonPlayPause = new System.Windows.Forms.Button();
-            this.ShowMusicLyricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlaybackBarControl = new MusicPlayer.PlaybackBarControl();
             this.PanelControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVolumeState)).BeginInit();
@@ -95,9 +95,10 @@
             this.LabelMusicCurrentTimeState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LabelMusicCurrentTimeState.AutoSize = true;
             this.LabelMusicCurrentTimeState.Font = new System.Drawing.Font("Comic Sans MS", 8F, System.Drawing.FontStyle.Bold);
-            this.LabelMusicCurrentTimeState.Location = new System.Drawing.Point(241, 13);
+            this.LabelMusicCurrentTimeState.Location = new System.Drawing.Point(321, 16);
+            this.LabelMusicCurrentTimeState.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelMusicCurrentTimeState.Name = "LabelMusicCurrentTimeState";
-            this.LabelMusicCurrentTimeState.Size = new System.Drawing.Size(41, 16);
+            this.LabelMusicCurrentTimeState.Size = new System.Drawing.Size(51, 19);
             this.LabelMusicCurrentTimeState.TabIndex = 0;
             this.LabelMusicCurrentTimeState.Text = "--:--";
             // 
@@ -106,9 +107,10 @@
             this.LabelMusicEndTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelMusicEndTime.AutoSize = true;
             this.LabelMusicEndTime.Font = new System.Drawing.Font("Comic Sans MS", 8F, System.Drawing.FontStyle.Bold);
-            this.LabelMusicEndTime.Location = new System.Drawing.Point(756, 13);
+            this.LabelMusicEndTime.Location = new System.Drawing.Point(1008, 16);
+            this.LabelMusicEndTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelMusicEndTime.Name = "LabelMusicEndTime";
-            this.LabelMusicEndTime.Size = new System.Drawing.Size(41, 16);
+            this.LabelMusicEndTime.Size = new System.Drawing.Size(51, 19);
             this.LabelMusicEndTime.TabIndex = 0;
             this.LabelMusicEndTime.Text = "--:--";
             // 
@@ -128,23 +130,97 @@
             this.PanelControls.Controls.Add(this.ButtonPlayPause);
             this.PanelControls.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.PanelControls.ForeColor = System.Drawing.Color.White;
-            this.PanelControls.Location = new System.Drawing.Point(0, 416);
+            this.PanelControls.Location = new System.Drawing.Point(0, 512);
+            this.PanelControls.Margin = new System.Windows.Forms.Padding(4);
             this.PanelControls.Name = "PanelControls";
-            this.PanelControls.Size = new System.Drawing.Size(934, 45);
+            this.PanelControls.Size = new System.Drawing.Size(1245, 55);
             this.PanelControls.TabIndex = 0;
             // 
             // TrackBarVolumeState
             // 
             this.TrackBarVolumeState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.TrackBarVolumeState.BackColor = System.Drawing.Color.Black;
-            this.TrackBarVolumeState.Location = new System.Drawing.Point(815, -1);
+            this.TrackBarVolumeState.Location = new System.Drawing.Point(1087, -1);
+            this.TrackBarVolumeState.Margin = new System.Windows.Forms.Padding(4);
             this.TrackBarVolumeState.Name = "TrackBarVolumeState";
-            this.TrackBarVolumeState.Size = new System.Drawing.Size(107, 45);
+            this.TrackBarVolumeState.Size = new System.Drawing.Size(143, 56);
             this.TrackBarVolumeState.TabIndex = 0;
             this.TrackBarVolumeState.TabStop = false;
             this.TrackBarVolumeState.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.TrackBarVolumeState.Value = 10;
             this.TrackBarVolumeState.Scroll += new System.EventHandler(this.TrackBarVolumeState_Scroll);
+            // 
+            // ButtonPrevieus
+            // 
+            this.ButtonPrevieus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonPrevieus.BackColor = System.Drawing.Color.Black;
+            this.ButtonPrevieus.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonPrevieus.BackgroundImage")));
+            this.ButtonPrevieus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ButtonPrevieus.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonPrevieus.FlatAppearance.BorderSize = 0;
+            this.ButtonPrevieus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPrevieus.Location = new System.Drawing.Point(15, 11);
+            this.ButtonPrevieus.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonPrevieus.Name = "ButtonPrevieus";
+            this.ButtonPrevieus.Size = new System.Drawing.Size(40, 31);
+            this.ButtonPrevieus.TabIndex = 0;
+            this.ButtonPrevieus.TabStop = false;
+            this.ButtonPrevieus.UseVisualStyleBackColor = false;
+            this.ButtonPrevieus.Click += new System.EventHandler(this.ButtonPrevieus_Click);
+            // 
+            // ButtonShuffle
+            // 
+            this.ButtonShuffle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonShuffle.BackColor = System.Drawing.Color.Black;
+            this.ButtonShuffle.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonShuffle.BackgroundImage")));
+            this.ButtonShuffle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ButtonShuffle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonShuffle.FlatAppearance.BorderSize = 0;
+            this.ButtonShuffle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonShuffle.Location = new System.Drawing.Point(264, 11);
+            this.ButtonShuffle.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonShuffle.Name = "ButtonShuffle";
+            this.ButtonShuffle.Size = new System.Drawing.Size(40, 31);
+            this.ButtonShuffle.TabIndex = 0;
+            this.ButtonShuffle.TabStop = false;
+            this.ButtonShuffle.UseVisualStyleBackColor = false;
+            this.ButtonShuffle.Click += new System.EventHandler(this.ButtonShuffle_Click);
+            // 
+            // ButtonLoop
+            // 
+            this.ButtonLoop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonLoop.BackColor = System.Drawing.Color.Black;
+            this.ButtonLoop.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonLoop.BackgroundImage")));
+            this.ButtonLoop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ButtonLoop.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonLoop.FlatAppearance.BorderSize = 0;
+            this.ButtonLoop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonLoop.Location = new System.Drawing.Point(224, 11);
+            this.ButtonLoop.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonLoop.Name = "ButtonLoop";
+            this.ButtonLoop.Size = new System.Drawing.Size(40, 31);
+            this.ButtonLoop.TabIndex = 0;
+            this.ButtonLoop.TabStop = false;
+            this.ButtonLoop.UseVisualStyleBackColor = false;
+            this.ButtonLoop.Click += new System.EventHandler(this.ButtonLoop_Click);
+            // 
+            // ButtonNext
+            // 
+            this.ButtonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonNext.BackColor = System.Drawing.Color.Black;
+            this.ButtonNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonNext.BackgroundImage")));
+            this.ButtonNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ButtonNext.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonNext.FlatAppearance.BorderSize = 0;
+            this.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonNext.Location = new System.Drawing.Point(124, 11);
+            this.ButtonNext.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonNext.Name = "ButtonNext";
+            this.ButtonNext.Size = new System.Drawing.Size(40, 31);
+            this.ButtonNext.TabIndex = 0;
+            this.ButtonNext.TabStop = false;
+            this.ButtonNext.UseVisualStyleBackColor = false;
+            this.ButtonNext.Click += new System.EventHandler(this.ButtonNext_Click);
             // 
             // ButtonShowAndHideList
             // 
@@ -154,16 +230,36 @@
             this.ButtonShowAndHideList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ButtonShowAndHideList.FlatAppearance.BorderSize = 0;
             this.ButtonShowAndHideList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonShowAndHideList.Location = new System.Drawing.Point(138, 9);
+            this.ButtonShowAndHideList.Location = new System.Drawing.Point(184, 11);
+            this.ButtonShowAndHideList.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonShowAndHideList.Name = "ButtonShowAndHideList";
-            this.ButtonShowAndHideList.Size = new System.Drawing.Size(30, 25);
+            this.ButtonShowAndHideList.Size = new System.Drawing.Size(40, 31);
             this.ButtonShowAndHideList.TabIndex = 0;
             this.ButtonShowAndHideList.TabStop = false;
             this.ButtonShowAndHideList.UseVisualStyleBackColor = false;
             this.ButtonShowAndHideList.Click += new System.EventHandler(this.ShowAndHideMusicListToolStripMenuItem_Click);
             // 
+            // ButtonPlayPause
+            // 
+            this.ButtonPlayPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonPlayPause.BackColor = System.Drawing.Color.Black;
+            this.ButtonPlayPause.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonPlayPause.BackgroundImage")));
+            this.ButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ButtonPlayPause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonPlayPause.FlatAppearance.BorderSize = 0;
+            this.ButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPlayPause.Location = new System.Drawing.Point(63, 1);
+            this.ButtonPlayPause.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonPlayPause.Name = "ButtonPlayPause";
+            this.ButtonPlayPause.Size = new System.Drawing.Size(53, 49);
+            this.ButtonPlayPause.TabIndex = 0;
+            this.ButtonPlayPause.TabStop = false;
+            this.ButtonPlayPause.UseVisualStyleBackColor = false;
+            this.ButtonPlayPause.Click += new System.EventHandler(this.ButtonPlayPause_Click);
+            // 
             // AppMenuStrip
             // 
+            this.AppMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.AppMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileToolStripMenuItem,
             this.EditToolStripMenuItem,
@@ -172,7 +268,7 @@
             this.AppMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.AppMenuStrip.Name = "AppMenuStrip";
             this.AppMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.AppMenuStrip.Size = new System.Drawing.Size(934, 24);
+            this.AppMenuStrip.Size = new System.Drawing.Size(1245, 28);
             this.AppMenuStrip.TabIndex = 20;
             this.AppMenuStrip.Text = "menuStrip1";
             // 
@@ -184,14 +280,14 @@
             this.toolStripSeparator,
             this.ExitToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.FileToolStripMenuItem.Text = "&File";
             // 
             // OpenFileToolStripMenuItem
             // 
             this.OpenFileToolStripMenuItem.Name = "OpenFileToolStripMenuItem";
             this.OpenFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenFileToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.OpenFileToolStripMenuItem.Size = new System.Drawing.Size(267, 26);
             this.OpenFileToolStripMenuItem.Text = "&Open File";
             this.OpenFileToolStripMenuItem.Click += new System.EventHandler(this.OpenFilesToolStripMenuItem_Click);
             // 
@@ -201,20 +297,20 @@
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             this.OpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(267, 26);
             this.OpenToolStripMenuItem.Text = "&Open Folder";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(264, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
             this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(267, 26);
             this.ExitToolStripMenuItem.Text = "E&xit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -231,13 +327,13 @@
             this.ShuffleToolStripMenuItem,
             this.LoopModeToolStripMenuItem});
             this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
-            this.EditToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.EditToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.EditToolStripMenuItem.Text = "&Edit";
             // 
             // PlayAndPauseToolStripMenuItem
             // 
             this.PlayAndPauseToolStripMenuItem.Name = "PlayAndPauseToolStripMenuItem";
-            this.PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.PlayAndPauseToolStripMenuItem.Text = "Play";
             this.PlayAndPauseToolStripMenuItem.Click += new System.EventHandler(this.ButtonPlayPause_Click);
             // 
@@ -245,7 +341,7 @@
             // 
             this.NextToolStripMenuItem.Name = "NextToolStripMenuItem";
             this.NextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.NextToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.NextToolStripMenuItem.Text = "&Next";
             this.NextToolStripMenuItem.Click += new System.EventHandler(this.ButtonNext_Click);
             // 
@@ -253,19 +349,19 @@
             // 
             this.PrevieusToolStripMenuItem.Name = "PrevieusToolStripMenuItem";
             this.PrevieusToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.PrevieusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PrevieusToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.PrevieusToolStripMenuItem.Text = "&Previeus";
             this.PrevieusToolStripMenuItem.Click += new System.EventHandler(this.ButtonPrevieus_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(193, 6);
             // 
             // EditSongToolStripMenuItem
             // 
             this.EditSongToolStripMenuItem.Name = "EditSongToolStripMenuItem";
-            this.EditSongToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditSongToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.EditSongToolStripMenuItem.Text = "Edit Song";
             this.EditSongToolStripMenuItem.Click += new System.EventHandler(this.EditToolStripMenuItem_Click);
             // 
@@ -276,39 +372,39 @@
             this.ArtistToolStripMenuItem,
             this.AlbumToolStripMenuItem});
             this.SortByToolStripMenuItem.Name = "SortByToolStripMenuItem";
-            this.SortByToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SortByToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.SortByToolStripMenuItem.Text = "Sort by:";
             // 
             // TitleToolStripMenuItem
             // 
             this.TitleToolStripMenuItem.Name = "TitleToolStripMenuItem";
-            this.TitleToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.TitleToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
             this.TitleToolStripMenuItem.Text = "Title";
             this.TitleToolStripMenuItem.Click += new System.EventHandler(this.SortByTitleToolStripMenuItem_Click);
             // 
             // ArtistToolStripMenuItem
             // 
             this.ArtistToolStripMenuItem.Name = "ArtistToolStripMenuItem";
-            this.ArtistToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.ArtistToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
             this.ArtistToolStripMenuItem.Text = "Artist";
             this.ArtistToolStripMenuItem.Click += new System.EventHandler(this.SortByArtistToolStripMenuItem_Click);
             // 
             // AlbumToolStripMenuItem
             // 
             this.AlbumToolStripMenuItem.Name = "AlbumToolStripMenuItem";
-            this.AlbumToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.AlbumToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
             this.AlbumToolStripMenuItem.Text = "Album";
             this.AlbumToolStripMenuItem.Click += new System.EventHandler(this.SortByAlbumToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(193, 6);
             // 
             // ShuffleToolStripMenuItem
             // 
             this.ShuffleToolStripMenuItem.Name = "ShuffleToolStripMenuItem";
-            this.ShuffleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ShuffleToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.ShuffleToolStripMenuItem.Text = "Shuffle Play";
             this.ShuffleToolStripMenuItem.Click += new System.EventHandler(this.ButtonShuffle_Click);
             // 
@@ -319,20 +415,20 @@
             this.LoopModeAllToolStripMenuItem,
             this.LoopModeOffToolStripMenuItem});
             this.LoopModeToolStripMenuItem.Name = "LoopModeToolStripMenuItem";
-            this.LoopModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoopModeToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.LoopModeToolStripMenuItem.Text = "Loop Mode";
             // 
             // LoopModeOneToolStripMenuItem
             // 
             this.LoopModeOneToolStripMenuItem.Name = "LoopModeOneToolStripMenuItem";
-            this.LoopModeOneToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.LoopModeOneToolStripMenuItem.Size = new System.Drawing.Size(119, 26);
             this.LoopModeOneToolStripMenuItem.Text = "One";
             this.LoopModeOneToolStripMenuItem.Click += new System.EventHandler(this.LoopModeOneToolStripMenuItem_Click);
             // 
             // LoopModeAllToolStripMenuItem
             // 
             this.LoopModeAllToolStripMenuItem.Name = "LoopModeAllToolStripMenuItem";
-            this.LoopModeAllToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.LoopModeAllToolStripMenuItem.Size = new System.Drawing.Size(119, 26);
             this.LoopModeAllToolStripMenuItem.Text = "All";
             this.LoopModeAllToolStripMenuItem.Click += new System.EventHandler(this.LoopModeAllToolStripMenuItem_Click);
             // 
@@ -341,7 +437,7 @@
             this.LoopModeOffToolStripMenuItem.Checked = true;
             this.LoopModeOffToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.LoopModeOffToolStripMenuItem.Name = "LoopModeOffToolStripMenuItem";
-            this.LoopModeOffToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.LoopModeOffToolStripMenuItem.Size = new System.Drawing.Size(119, 26);
             this.LoopModeOffToolStripMenuItem.Text = "Off";
             this.LoopModeOffToolStripMenuItem.Click += new System.EventHandler(this.LoopModeOffToolStripMenuItem_Click);
             // 
@@ -351,20 +447,20 @@
             this.ShowAndHideMusicListToolStripMenuItem,
             this.ShowAndHideSongLyricsToolStripMenuItem});
             this.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem";
-            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.ViewToolStripMenuItem.Text = "&View";
             // 
             // ShowAndHideMusicListToolStripMenuItem
             // 
             this.ShowAndHideMusicListToolStripMenuItem.Name = "ShowAndHideMusicListToolStripMenuItem";
-            this.ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.ShowAndHideMusicListToolStripMenuItem.Text = "Hide Music List";
             this.ShowAndHideMusicListToolStripMenuItem.Click += new System.EventHandler(this.ShowAndHideMusicListToolStripMenuItem_Click);
             // 
             // ShowAndHideSongLyricsToolStripMenuItem
             // 
             this.ShowAndHideSongLyricsToolStripMenuItem.Name = "ShowAndHideSongLyricsToolStripMenuItem";
-            this.ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.ShowAndHideSongLyricsToolStripMenuItem.Text = "Show Music Lyrics";
             this.ShowAndHideSongLyricsToolStripMenuItem.Click += new System.EventHandler(this.ShowSongLyricsToolStripMenuItem_Click);
             // 
@@ -373,13 +469,13 @@
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AboutToolStripMenuItem});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.HelpToolStripMenuItem.Text = "&Help";
             // 
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
             this.AboutToolStripMenuItem.Text = "About";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -391,6 +487,7 @@
             // MusicPanelContextMenuStrip
             // 
             this.MusicPanelContextMenuStrip.BackColor = System.Drawing.Color.White;
+            this.MusicPanelContextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MusicPanelContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StartSongToolStripMenuItem,
             this.RemoveFromListToolStripMenuItem,
@@ -401,14 +498,14 @@
             this.toolStripSeparator2,
             this.ClearListToolStripMenuItem});
             this.MusicPanelContextMenuStrip.Name = "MusicPanelContextMenuStrip";
-            this.MusicPanelContextMenuStrip.Size = new System.Drawing.Size(171, 148);
+            this.MusicPanelContextMenuStrip.Size = new System.Drawing.Size(211, 188);
             // 
             // StartSongToolStripMenuItem
             // 
             this.StartSongToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.StartSongToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.StartSongToolStripMenuItem.Name = "StartSongToolStripMenuItem";
-            this.StartSongToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.StartSongToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.StartSongToolStripMenuItem.Text = "Start this Song";
             this.StartSongToolStripMenuItem.Click += new System.EventHandler(this.StartSongToolStripMenuItem_Click);
             // 
@@ -417,19 +514,26 @@
             this.RemoveFromListToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.RemoveFromListToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.RemoveFromListToolStripMenuItem.Name = "RemoveFromListToolStripMenuItem";
-            this.RemoveFromListToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.RemoveFromListToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.RemoveFromListToolStripMenuItem.Text = "Remove From List";
             this.RemoveFromListToolStripMenuItem.Click += new System.EventHandler(this.RemoveFromListToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
+            // 
+            // ShowMusicLyricsToolStripMenuItem
+            // 
+            this.ShowMusicLyricsToolStripMenuItem.Name = "ShowMusicLyricsToolStripMenuItem";
+            this.ShowMusicLyricsToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.ShowMusicLyricsToolStripMenuItem.Text = "Show Music Lyrics";
+            this.ShowMusicLyricsToolStripMenuItem.Click += new System.EventHandler(this.ShowSongLyricsToolStripMenuItem_Click);
             // 
             // EditToolStripMenuItem1
             // 
             this.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1";
-            this.EditToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.EditToolStripMenuItem1.Size = new System.Drawing.Size(210, 24);
             this.EditToolStripMenuItem1.Text = "Edit";
             this.EditToolStripMenuItem1.Click += new System.EventHandler(this.EditToolStripMenuItem_Click);
             // 
@@ -440,54 +544,55 @@
             this.SortByArtistToolContextMenuStriItem,
             this.SortByAlbumToolContextMenuStriItem});
             this.SortByToolContextMenuStriItem.Name = "SortByToolContextMenuStriItem";
-            this.SortByToolContextMenuStriItem.Size = new System.Drawing.Size(170, 22);
+            this.SortByToolContextMenuStriItem.Size = new System.Drawing.Size(210, 24);
             this.SortByToolContextMenuStriItem.Text = "Sort by:";
             // 
             // SortByTitleToolContextMenuStriItem
             // 
             this.SortByTitleToolContextMenuStriItem.Name = "SortByTitleToolContextMenuStriItem";
-            this.SortByTitleToolContextMenuStriItem.Size = new System.Drawing.Size(110, 22);
+            this.SortByTitleToolContextMenuStriItem.Size = new System.Drawing.Size(136, 26);
             this.SortByTitleToolContextMenuStriItem.Text = "Title";
             this.SortByTitleToolContextMenuStriItem.Click += new System.EventHandler(this.SortByTitleToolStripMenuItem_Click);
             // 
             // SortByArtistToolContextMenuStriItem
             // 
             this.SortByArtistToolContextMenuStriItem.Name = "SortByArtistToolContextMenuStriItem";
-            this.SortByArtistToolContextMenuStriItem.Size = new System.Drawing.Size(110, 22);
+            this.SortByArtistToolContextMenuStriItem.Size = new System.Drawing.Size(136, 26);
             this.SortByArtistToolContextMenuStriItem.Text = "Artist";
             this.SortByArtistToolContextMenuStriItem.Click += new System.EventHandler(this.SortByArtistToolStripMenuItem_Click);
             // 
             // SortByAlbumToolContextMenuStriItem
             // 
             this.SortByAlbumToolContextMenuStriItem.Name = "SortByAlbumToolContextMenuStriItem";
-            this.SortByAlbumToolContextMenuStriItem.Size = new System.Drawing.Size(110, 22);
+            this.SortByAlbumToolContextMenuStriItem.Size = new System.Drawing.Size(136, 26);
             this.SortByAlbumToolContextMenuStriItem.Text = "Album";
             this.SortByAlbumToolContextMenuStriItem.Click += new System.EventHandler(this.SortByAlbumToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
             // 
             // ClearListToolStripMenuItem
             // 
             this.ClearListToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.ClearListToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.ClearListToolStripMenuItem.Name = "ClearListToolStripMenuItem";
-            this.ClearListToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.ClearListToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.ClearListToolStripMenuItem.Text = "Clear List";
             this.ClearListToolStripMenuItem.Click += new System.EventHandler(this.ClearListToolStripMenuItem_Click);
             // 
             // PictureBoxMusicCover
             // 
             this.PictureBoxMusicCover.BackColor = System.Drawing.Color.Black;
-            this.PictureBoxMusicCover.BackgroundImage = global::MusicPlayer.Properties.Resources.MusicTon;
+            this.PictureBoxMusicCover.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PictureBoxMusicCover.BackgroundImage")));
             this.PictureBoxMusicCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PictureBoxMusicCover.Controls.Add(this.FlowLayoutPanelMusic);
             this.PictureBoxMusicCover.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PictureBoxMusicCover.Location = new System.Drawing.Point(0, 24);
+            this.PictureBoxMusicCover.Location = new System.Drawing.Point(0, 28);
+            this.PictureBoxMusicCover.Margin = new System.Windows.Forms.Padding(4);
             this.PictureBoxMusicCover.Name = "PictureBoxMusicCover";
-            this.PictureBoxMusicCover.Size = new System.Drawing.Size(934, 392);
+            this.PictureBoxMusicCover.Size = new System.Drawing.Size(1245, 484);
             this.PictureBoxMusicCover.TabIndex = 0;
             // 
             // FlowLayoutPanelMusic
@@ -495,127 +600,38 @@
             this.FlowLayoutPanelMusic.AutoScroll = true;
             this.FlowLayoutPanelMusic.Dock = System.Windows.Forms.DockStyle.Right;
             this.FlowLayoutPanelMusic.ForeColor = System.Drawing.Color.White;
-            this.FlowLayoutPanelMusic.Location = new System.Drawing.Point(749, 0);
+            this.FlowLayoutPanelMusic.Location = new System.Drawing.Point(998, 0);
+            this.FlowLayoutPanelMusic.Margin = new System.Windows.Forms.Padding(4);
             this.FlowLayoutPanelMusic.Name = "FlowLayoutPanelMusic";
-            this.FlowLayoutPanelMusic.Size = new System.Drawing.Size(185, 392);
+            this.FlowLayoutPanelMusic.Size = new System.Drawing.Size(247, 484);
             this.FlowLayoutPanelMusic.TabIndex = 0;
-            // 
-            // ButtonPrevieus
-            // 
-            this.ButtonPrevieus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonPrevieus.BackColor = System.Drawing.Color.Black;
-            this.ButtonPrevieus.BackgroundImage = global::MusicPlayer.Properties.Resources.Previous;
-            this.ButtonPrevieus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ButtonPrevieus.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonPrevieus.FlatAppearance.BorderSize = 0;
-            this.ButtonPrevieus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonPrevieus.Location = new System.Drawing.Point(11, 9);
-            this.ButtonPrevieus.Name = "ButtonPrevieus";
-            this.ButtonPrevieus.Size = new System.Drawing.Size(30, 25);
-            this.ButtonPrevieus.TabIndex = 0;
-            this.ButtonPrevieus.TabStop = false;
-            this.ButtonPrevieus.UseVisualStyleBackColor = false;
-            this.ButtonPrevieus.Click += new System.EventHandler(this.ButtonPrevieus_Click);
-            // 
-            // ButtonShuffle
-            // 
-            this.ButtonShuffle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonShuffle.BackColor = System.Drawing.Color.Black;
-            this.ButtonShuffle.BackgroundImage = global::MusicPlayer.Properties.Resources.shuffleOff;
-            this.ButtonShuffle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ButtonShuffle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonShuffle.FlatAppearance.BorderSize = 0;
-            this.ButtonShuffle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonShuffle.Location = new System.Drawing.Point(198, 9);
-            this.ButtonShuffle.Name = "ButtonShuffle";
-            this.ButtonShuffle.Size = new System.Drawing.Size(30, 25);
-            this.ButtonShuffle.TabIndex = 0;
-            this.ButtonShuffle.TabStop = false;
-            this.ButtonShuffle.UseVisualStyleBackColor = false;
-            this.ButtonShuffle.Click += new System.EventHandler(this.ButtonShuffle_Click);
-            // 
-            // ButtonLoop
-            // 
-            this.ButtonLoop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonLoop.BackColor = System.Drawing.Color.Black;
-            this.ButtonLoop.BackgroundImage = global::MusicPlayer.Properties.Resources.LoopOff;
-            this.ButtonLoop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ButtonLoop.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonLoop.FlatAppearance.BorderSize = 0;
-            this.ButtonLoop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonLoop.Location = new System.Drawing.Point(168, 9);
-            this.ButtonLoop.Name = "ButtonLoop";
-            this.ButtonLoop.Size = new System.Drawing.Size(30, 25);
-            this.ButtonLoop.TabIndex = 0;
-            this.ButtonLoop.TabStop = false;
-            this.ButtonLoop.UseVisualStyleBackColor = false;
-            this.ButtonLoop.Click += new System.EventHandler(this.ButtonLoop_Click);
-            // 
-            // ButtonNext
-            // 
-            this.ButtonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonNext.BackColor = System.Drawing.Color.Black;
-            this.ButtonNext.BackgroundImage = global::MusicPlayer.Properties.Resources.Next;
-            this.ButtonNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ButtonNext.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonNext.FlatAppearance.BorderSize = 0;
-            this.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonNext.Location = new System.Drawing.Point(93, 9);
-            this.ButtonNext.Name = "ButtonNext";
-            this.ButtonNext.Size = new System.Drawing.Size(30, 25);
-            this.ButtonNext.TabIndex = 0;
-            this.ButtonNext.TabStop = false;
-            this.ButtonNext.UseVisualStyleBackColor = false;
-            this.ButtonNext.Click += new System.EventHandler(this.ButtonNext_Click);
-            // 
-            // ButtonPlayPause
-            // 
-            this.ButtonPlayPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonPlayPause.BackColor = System.Drawing.Color.Black;
-            this.ButtonPlayPause.BackgroundImage = global::MusicPlayer.Properties.Resources.Play;
-            this.ButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ButtonPlayPause.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonPlayPause.FlatAppearance.BorderSize = 0;
-            this.ButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonPlayPause.Location = new System.Drawing.Point(47, 1);
-            this.ButtonPlayPause.Name = "ButtonPlayPause";
-            this.ButtonPlayPause.Size = new System.Drawing.Size(40, 40);
-            this.ButtonPlayPause.TabIndex = 0;
-            this.ButtonPlayPause.TabStop = false;
-            this.ButtonPlayPause.UseVisualStyleBackColor = false;
-            this.ButtonPlayPause.Click += new System.EventHandler(this.ButtonPlayPause_Click);
-            // 
-            // ShowMusicLyricsToolStripMenuItem
-            // 
-            this.ShowMusicLyricsToolStripMenuItem.Name = "ShowMusicLyricsToolStripMenuItem";
-            this.ShowMusicLyricsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.ShowMusicLyricsToolStripMenuItem.Text = "Show Music Lyrics";
-            this.ShowMusicLyricsToolStripMenuItem.Click += new System.EventHandler(this.ShowMusicLyricsToolStripMenuItem_Click);
             // 
             // PlaybackBarControl
             // 
             this.PlaybackBarControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PlaybackBarControl.BackColor = System.Drawing.Color.Transparent;
-            this.PlaybackBarControl.Location = new System.Drawing.Point(288, 11);
+            this.PlaybackBarControl.Location = new System.Drawing.Point(384, 14);
+            this.PlaybackBarControl.Margin = new System.Windows.Forms.Padding(5);
             this.PlaybackBarControl.Max = 100;
             this.PlaybackBarControl.Name = "PlaybackBarControl";
-            this.PlaybackBarControl.Size = new System.Drawing.Size(462, 21);
+            this.PlaybackBarControl.Size = new System.Drawing.Size(616, 26);
             this.PlaybackBarControl.TabIndex = 1;
             this.PlaybackBarControl.Val = 0;
             // 
-            // MusicPlayer_
+            // MainForm
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(934, 461);
+            this.ClientSize = new System.Drawing.Size(1245, 567);
             this.Controls.Add(this.PictureBoxMusicCover);
             this.Controls.Add(this.AppMenuStrip);
             this.Controls.Add(this.PanelControls);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MusicPlayer_";
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MusicPlayer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);

@@ -1,27 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using MusicPlayer.Classes;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
-using NAudio.Wave;
-using System.Linq;
-using System.IO;
-using System;
 
 namespace MusicPlayer
 {
     public partial class MainForm : Form
     {
-        private SortedMethode LastSortedMethode;
-        private AudioFileReader AudioFileReader;
-        private bool IsFileGenerateException;
-        private int CurrentPlayingMusicIndex;
+        private Song song;
+        public static List<string> Musics;
         private List<string> AudioExtensions;
-        private ShuffleState ShuffleState;
-        private WaveOutEvent WaveOutEvent;
-        public static List<string> Music;
+        private int CurrentMusicIndex;
         private MusicState MusicState;
+        private ShuffleState ShuffleState;
         private LoopState LoopState;
-        private Random RandomValue;
+        private SortedMethode LastSortedMethode;
+
+        //  =================== ======================= \\
+
+        //private AudioFileReader AudioFileReader;
+        //private bool IsFileGenerateException;
+        //private WaveOutEvent WaveOutEvent;
+        //private Random RandomValue;
 
         public MainForm()
         {
@@ -30,13 +34,11 @@ namespace MusicPlayer
 
         private void MusicPlayer_Load(object sender, EventArgs e)
         {
-            Music = new List<string>();
-            RandomValue = new Random();
+            Musics = new List<string>();
             MusicState = MusicState.Pause;
             ShuffleState = ShuffleState.Off;
             LoopState = LoopState.Off;
-            CurrentPlayingMusicIndex = 0;
-            IsFileGenerateException = false;
+            CurrentMusicIndex = 0;
             LastSortedMethode = SortedMethode.Title;
 
             AudioExtensions = new List<string>()
@@ -49,7 +51,12 @@ namespace MusicPlayer
 
         private void OpenFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string audioFilter = "Audio Files|" + (from ext in AudioExtensions select ("*" + ext + "; ")) + "| All files |*.*";
+            string audioFilter = "Audio Files|";
+
+            foreach (string ext in AudioExtensions)
+                audioFilter += ("*" + ext + "; ");
+
+            audioFilter += "| All files |*.*";
 
             OpenFileDialog OFD = new OpenFileDialog
             {
@@ -96,7 +103,7 @@ namespace MusicPlayer
             {
                 if (FlowLayoutPanelMusic.Controls[i] == ClickedMusic)
                 {
-                    CurrentPlayingMusicIndex = i;
+                    CurrentMusicIndex = i;
                     MusicInitialize(ClickedMusic.MusicPath);
                 }
 
@@ -141,7 +148,7 @@ namespace MusicPlayer
             {
                 if (FileIsAudio(item))
                 {
-                    Music.Add(item);
+                    Musics.Add(item);
                     AddMusicToFlowLayoutPanel(item);
                 }
                 await Task.Delay(10);
@@ -165,40 +172,24 @@ namespace MusicPlayer
 
         private void MusicInitialize(string path)
         {
-            if (WaveOutEvent != null)
-                WaveOutEvent.Dispose();
-            if (AudioFileReader != null)
-                AudioFileReader.Dispose();
-
             try
             {
-                AudioFileReader = new AudioFileReader(path);
-                WaveOutEvent = new WaveOutEvent();
-                WaveOutEvent.Init(AudioFileReader);
-                WaveOutEvent.Play();
-
-                if (!AppTimer.Enabled)
-                    AppTimer.Start();
+                if (song != null) song.Dispose();
+                song = new Song(path);
 
                 MusicState = MusicState.Play;
                 ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
                 PlayAndPauseToolStripMenuItem.Text = "Pause";
 
-                PlaybackBarControl.Max = Convert.ToInt32(ConvertFrom.TimeToSeconds(AudioFileReader.TotalTime));
-                AudioFileReader.Volume = TrackBarVolumeState.Value / 10f;
+                PlaybackBarControl.Max = (int)song.GetSongLength().TotalSeconds;
+                song.SetSongVolume(TrackBarVolumeState.Value / 10f);
+                LabelMusicEndTime.Text = song.GetSongLength().ToString(@"mm\:ss");
+                PictureBoxMusicCover.BackgroundImage = song.cover;
+                this.Text = song.artist + " - " + song.title;
 
-                //  This condition is related to the (Exception) Code Part
-                //  The Path Variable will be changed to the CurrentPlayingMusic, for get the original audio meatdata
-                if (IsFileGenerateException)
-                    path = Music[CurrentPlayingMusicIndex];
+                if (!AppTimer.Enabled) AppTimer.Start();
 
-                //  Change the Label Text to the Music Total Time
-                //  Change the PictureBox BackgroundImage to the Music Cover
-                LabelMusicEndTime.Text = AudioFileReader.TotalTime.ToString(@"mm\:ss");
-                PictureBoxMusicCover.BackgroundImage = TagFile.GetCover(path);
-
-                //  Change the Form Title to the Music Title + Artist
-                this.Text = TagFile.GetArtists(path) + " - " + TagFile.GetTitle(path);
+                song.Play();
 
                 //  Change the Current MusicPanel BackgroundColor, and reset the others
                 foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
@@ -209,52 +200,24 @@ namespace MusicPlayer
                         musicPanel.BackColor = Color.Transparent;
                 }
 
-                //  Reset the "IsFileGenerateException" value to false
-                IsFileGenerateException = false;
             }
-            catch
+            catch (Exception exception)
             {
-                try
-                {
-                    //  If Audio File GenerateException, Convert it to 'wav' and save it
-                    //  on a Temp File, so we can play it later
-                    AudioFileReader = null;
-
-                    using (var reader = new MediaFoundationReader(Music[CurrentPlayingMusicIndex]))
-                    {
-                        if (!Directory.Exists("TempFiles/"))
-                            Directory.CreateDirectory("TempFiles/");
-
-                        //  Save the 'wav' audio on the Temp File
-                        WaveFileWriter.CreateWaveFile("TempFiles/temp.wav", reader);
-                    }
-
-                    //  Change the "IsFileGenerateException" value to true, because the File is Generate Exception
-                    IsFileGenerateException = true;
-
-                    //  Try to play the Temp File, if isn't played alert a message to the user
-                    MusicInitialize("TempFiles/temp.wav");
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show("This song is hard for us to play it for you, Please play another one." + Environment.NewLine + "(" + Ex.Message + ")",
-                            "We are sorry!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                StaticData.ShowException(exception);
             }
-
         }
 
         private void ButtonPlayPause_Click(object sender, EventArgs e)
         {
-            if (Music.Count != 0)
+            if (Musics.Count != 0)
             {
                 if (MusicState == MusicState.Pause)
                 {
-                    if (CurrentPlayingMusicIndex == 0 && WaveOutEvent == null)
-                        MusicInitialize(Music[CurrentPlayingMusicIndex]);
+                    if (CurrentMusicIndex == 0 && song == null)
+                        MusicInitialize(Musics[CurrentMusicIndex]);
                     else
                     {
-                        WaveOutEvent.Play();
+                        song.Play();
 
                         MusicState = MusicState.Play;
                         ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
@@ -263,7 +226,7 @@ namespace MusicPlayer
                 }
                 else if (MusicState == MusicState.Play)
                 {
-                    WaveOutEvent.Pause();
+                    song.Pause();
 
                     MusicState = MusicState.Pause;
                     ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
@@ -277,28 +240,28 @@ namespace MusicPlayer
         private void ButtonPrevieus_Click(object sender, EventArgs e)
         {
             //  Check if the Current Playing Music isn't the first one on list, and the list isn't clear
-            if (CurrentPlayingMusicIndex != 0 && Music.Count != 0)
+            if (CurrentMusicIndex != 0 && Musics.Count != 0)
             {
-                MusicInitialize(Music[--CurrentPlayingMusicIndex]);
+                MusicInitialize(Musics[--CurrentMusicIndex]);
 
-                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentPlayingMusicIndex]);
+                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentMusicIndex]);
             }
         }
 
         private void ButtonNext_Click(object sender, EventArgs e)
         {
             //  Check if the Current Playing Music isn't the last one on list, and the list isn't clear
-            //  and check if the LoopState equale All, to reaPeat the Playlist from the first
-            if (CurrentPlayingMusicIndex != Music.Count - 1 && Music.Count != 0)
+            //  and check if the LoopState equale All, to reapeat the Playlist from the first
+            if (CurrentMusicIndex != Musics.Count - 1 && Musics.Count != 0)
             {
-                MusicInitialize(Music[++CurrentPlayingMusicIndex]);
+                MusicInitialize(Musics[++CurrentMusicIndex]);
 
-                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentPlayingMusicIndex]);
+                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentMusicIndex]);
             }
-            else if (CurrentPlayingMusicIndex == Music.Count - 1)
+            else if (CurrentMusicIndex == Musics.Count - 1)
             {
-                CurrentPlayingMusicIndex = 0;
-                MusicInitialize(Music[CurrentPlayingMusicIndex]);
+                CurrentMusicIndex = 0;
+                MusicInitialize(Musics[CurrentMusicIndex]);
 
                 if (LoopState == LoopState.Off)
                     ButtonPlayPause.PerformClick();
@@ -307,7 +270,7 @@ namespace MusicPlayer
 
         private void ButtonShuffle_Click(object sender, EventArgs e)
         {
-            if (Music.Count != 0)
+            if (Musics.Count != 0)
             {
                 if (ShuffleState == ShuffleState.On)
                 {
@@ -337,14 +300,18 @@ namespace MusicPlayer
                     ArtistToolStripMenuItem.Checked = false;
                     AlbumToolStripMenuItem.Checked = false;
 
+                    Random rand = new Random();
+
                     //  Shuffle the List
-                    List<string> ShuffledList = Music.OrderBy((item) => RandomValue.Next()).ToList();
+                    List<string> ShuffledList = Musics.OrderBy((item) => rand.Next()).ToList();
 
                     // Clear the Lists and initialize the index and waveoutevent to null
                     ClearListToolStripMenuItem.PerformClick();
 
                     //  Initialize the list and Play the first music
                     AddItemsInListToTheMainList(ShuffledList);
+
+                    MusicInitialize(Musics[CurrentMusicIndex]);
                 }
             }
         }
@@ -406,10 +373,10 @@ namespace MusicPlayer
 
         private void ChangedProgressPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (AudioFileReader != null)
+            if (song != null)
             {
                 if (PlaybackBarControl.IsMouseDown)
-                    AudioFileReader.CurrentTime = ConvertFrom.SecondsToTime(PlaybackBarControl.Val);
+                    song.SetSongPosition(PlaybackBarControl.Val);
             }
             else
                 PlaybackBarControl.Val = 0;
@@ -417,28 +384,28 @@ namespace MusicPlayer
 
         private void TrackBarVolumeState_Scroll(object sender, EventArgs e)
         {
-            if (AudioFileReader != null)
-                AudioFileReader.Volume = TrackBarVolumeState.Value / 10f;
+            if (song != null)
+                song.SetSongVolume(TrackBarVolumeState.Value / 10f);
             else
                 TrackBarVolumeState.Value = 10;
         }
 
         private void AppTimer_Tick(object sender, EventArgs e)
         {
-            if (AudioFileReader != null)
+            if (song != null)
             {
                 //  Change the Label Text to the Music current Time
-                LabelMusicCurrentTimeState.Text = AudioFileReader.CurrentTime.ToString(@"mm\:ss");
+                LabelMusicCurrentTimeState.Text = song.GetCurrentTime().ToString(@"mm\:ss");
 
                 //  Change the PlaybackBarControl value to the Music current Time
-                PlaybackBarControl.Val = Convert.ToInt32(ConvertFrom.TimeToSeconds(AudioFileReader.CurrentTime));
+                PlaybackBarControl.Val = (int)song.GetCurrentTime().TotalSeconds;
 
                 //  Check if the Music end, then start the Next one or repeat it
-                if (LabelMusicCurrentTimeState.Text == LabelMusicEndTime.Text)
+                if (song.GetCurrentTime().TotalSeconds == song.GetSongLength().TotalSeconds)
                 {
                     if (LoopState == LoopState.One)
-                        AudioFileReader.Position = 0;
-                    else if (LoopState == LoopState.Off || LoopState == LoopState.All)
+                        song.SetSongPosition(0);
+                    else
                     {
                         MusicState = MusicState.Pause;
                         ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
@@ -470,13 +437,13 @@ namespace MusicPlayer
                 if (musicPanel.BackColor == Color.FromArgb(28, 28, 28))
                 {
                     //  if the removed MusicPanel is the Playong Music, Start the next one
-                    if (musicPanel.MusicPath == Music[CurrentPlayingMusicIndex])
+                    if (musicPanel.MusicPath == Musics[CurrentMusicIndex])
                         ButtonNext.PerformClick();
 
-                    Music.Remove(musicPanel.MusicPath);
+                    Musics.Remove(musicPanel.MusicPath);
                     FlowLayoutPanelMusic.Controls.Remove(musicPanel);
 
-                    if (Music.Count == 0)
+                    if (Musics.Count == 0)
                         ClearListToolStripMenuItem_Click(sender, e);
 
                     break;
@@ -484,11 +451,11 @@ namespace MusicPlayer
             }
 
             //  Initialize the CurrentPlayingMusicIndex with the correct index
-            for (int i = 0; i < Music.Count; i++)
+            for (int i = 0; i < Musics.Count; i++)
             {
-                if (this.Text == (TagFile.GetArtists(Music[i]) + " - " + TagFile.GetTitle(Music[i])))
+                if (this.Text == (song.artist + " - " + song.title))
                 {
-                    CurrentPlayingMusicIndex = i;
+                    CurrentMusicIndex = i;
                     break;
                 }
             }
@@ -510,64 +477,82 @@ namespace MusicPlayer
 
         private void ShowSongLyricsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Music.Count != 0)
+            if (Musics.Count != 0)
             {
-                LyricsForm LyricsForm = new LyricsForm(Music[CurrentPlayingMusicIndex])
-                {
-                    Icon = this.Icon
-                };
-                LyricsForm.Show();
-            }
-        }
+                int index = -1;
 
-        private void ShowMusicLyricsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Music.Count != 0)
-            {
                 for (int i = 0; i < FlowLayoutPanelMusic.Controls.Count; i++)
                 {
                     if (FlowLayoutPanelMusic.Controls[i].BackColor == Color.FromArgb(28, 28, 28))
                     {
-                        LyricsForm LyricsForm = new LyricsForm(Music[i])
-                        {
-                            Icon = this.Icon
-                        };
-                        LyricsForm.Show();
+                        index = i;
                         break;
                     }
                 }
+
+                if (index > -1)
+                    new LyricsForm(Musics[index]) { Icon = this.Icon }.Show();
             }
         }
 
         private void EditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Music.Count != 0)
+            try
             {
-                for (int i = 0; i < FlowLayoutPanelMusic.Controls.Count; i++)
+                this.Cursor = Cursors.WaitCursor;
+
+                if (Musics.Count != 0)
                 {
-                    if (FlowLayoutPanelMusic.Controls[i].BackColor == Color.FromArgb(28, 28, 28))
+                    int index = -1;
+
+                    for (int i = 0; i < FlowLayoutPanelMusic.Controls.Count; i++)
                     {
-                        EditForm EditForm = new EditForm(i)
+                        if (FlowLayoutPanelMusic.Controls[i].BackColor == Color.FromArgb(28, 28, 28))
                         {
-                            Icon = this.Icon
-                        };
-                        EditForm.Show();
-                        break;
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index > -1)
+                    {
+                        EditForm editForm = new EditForm(Musics[index]) { Icon = this.Icon };
+
+                        if (editForm.ShowDialog() == DialogResult.OK)
+                        {
+                            Song returnedSong = new Song(editForm.song.path, false);
+
+                            (FlowLayoutPanelMusic.Controls[index] as MusicPanel).MusicPath = returnedSong.path;
+                            (FlowLayoutPanelMusic.Controls[index] as MusicPanel).MusicTitle.Text = returnedSong.title;
+                            (FlowLayoutPanelMusic.Controls[index] as MusicPanel).MusicCover.Image = returnedSong.cover.GetThumbnailImage(40, 40, null, IntPtr.Zero);
+
+                            MessageBox.Show(returnedSong.ToString());
+                        }
                     }
                 }
+            }
+            catch (Exception exception)
+            {
+                StaticData.ShowException(exception);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 
         private void SortByTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  I use the OrderBy function and the Linq, to sort the list on the title
-            List<string> SortedList = Music.OrderBy(o => TagFile.GetTitle(o)).ToList();
+            List<string> SortedList = Musics.OrderBy(o => Song.GetTitle(o)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
             AddItemsInListToTheMainList(SortedList);
+
+            MusicInitialize(Musics[CurrentMusicIndex]);
 
             LastSortedMethode = SortedMethode.Title;
 
@@ -582,7 +567,7 @@ namespace MusicPlayer
 
         private void SortByArtistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var SortedList = Music.OrderBy(x => TagFile.GetArtists(x)).ThenBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
+            var SortedList = Musics.OrderBy(x => Song.GetArtist(x)).ThenBy(x => Song.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
             // The only reason make me keep All this Code bellow on comment, is that i found a better and small way to do it (The Line upove)
             #region The Comment Code
             /*  //  I use the OrderBy function and the Linq, to sort the list on the Album
@@ -624,6 +609,8 @@ namespace MusicPlayer
             //  Initialize the list and Play the first music
             AddItemsInListToTheMainList(SortedList);
 
+            MusicInitialize(Musics[CurrentMusicIndex]);
+
             LastSortedMethode = SortedMethode.Artist;
 
             SortByArtistToolContextMenuStriItem.Checked = true;
@@ -638,13 +625,15 @@ namespace MusicPlayer
         private void SortByAlbumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  Sort thelist by the Album then the Track Number
-            var SortedList = Music.OrderBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
+            var SortedList = Musics.OrderBy(x => Song.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
             AddItemsInListToTheMainList(SortedList);
+
+            MusicInitialize(Musics[CurrentMusicIndex]);
 
             LastSortedMethode = SortedMethode.Album;
 
@@ -660,25 +649,15 @@ namespace MusicPlayer
         private void ClearListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AppTimer.Stop();
-
-            if (WaveOutEvent != null)
-            {
-                WaveOutEvent.Dispose();
-                WaveOutEvent = null;
-            }
-            if (AudioFileReader != null)
-            {
-                AudioFileReader.Dispose();
-                AudioFileReader = null;
-            }
+            if (song != null) song.Dispose();
 
             FlowLayoutPanelMusic.Controls.Clear();
-            Music.Clear();
+            Musics.Clear();
 
             LabelMusicCurrentTimeState.Text = "--:--";
             LabelMusicEndTime.Text = "--:--";
 
-            CurrentPlayingMusicIndex = 0;
+            CurrentMusicIndex = 0;
             PlaybackBarControl.Val = 0;
 
             PictureBoxMusicCover.BackgroundImage = Properties.Resources.MusicTon;
@@ -692,16 +671,6 @@ namespace MusicPlayer
         private void MusicPlayer_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.All;
-
-            //  Allow only the Audio Files and the folders
-            foreach (string FilePath in (string[])e.Data.GetData(DataFormats.FileDrop))
-            {
-                if (!FileIsAudio(FilePath))
-                {
-                    e.Effect = DragDropEffects.None;
-                    break;
-                }
-            }
         }
 
         private void MusicPlayer_DragDrop(object sender, DragEventArgs e)
@@ -739,7 +708,7 @@ namespace MusicPlayer
 
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Clear the Lists and initialize the index and waveoutevent to null
+            // Clear the Lists and initialize the index and song to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Delete the Temp Files

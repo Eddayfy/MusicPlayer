@@ -1,28 +1,24 @@
-﻿using System.Windows.Forms;
+﻿using MusicPlayer.Classes;
 using System;
+using System.Windows.Forms;
 
 namespace MusicPlayer
 {
     public partial class LyricsForm : Form
     {
-        private string MusicPath;
+        private readonly Song song;
 
-        public LyricsForm()
-        {
-            InitializeComponent();
-        }
-
-        public LyricsForm(string MusicPath)
+        public LyricsForm(string path)
         {
             InitializeComponent();
 
-            this.MusicPath = MusicPath;
+            this.song = new Song(path, false);
         }
 
         private void LyricsForm_Load(object sender, EventArgs e)
         {
-            RichTextBoxLyrics.Text = TagFile.GetLyrics(MusicPath);
-            this.Text = TagFile.GetArtists(MusicPath) + " - " + TagFile.GetTitle(MusicPath) + " :Lyrics:";
+            RichTextBoxLyrics.Text = song.lyrics;
+            this.Text = song.artist + " - " + song.title + " :Lyrics:";
 
             RichTextBoxLyrics.SelectAll();
             RichTextBoxLyrics.SelectionAlignment = HorizontalAlignment.Center;
